@@ -38,6 +38,18 @@ export default async function PostIdPage({ params }) {
     revalidatePath(`/posts/${postId}`);
   }
 
+  // Code for handling deletion of comments
+  async function handleDeleteComment(formData) {
+    "use server";
+
+    const commentId = parseInt(formData.get("commentId"), 10);
+    const postId = parseInt(formData.get("postId"), 10);
+
+    await db.query(`DELETE FROM pigeonblogcomments WHERE id = $1`, [commentId]);
+
+    revalidatePath(`/posts/${postId}`);
+  }
+
   return (
     <div>
       <div className="post-container">
@@ -72,6 +84,12 @@ export default async function PostIdPage({ params }) {
                 Posted on: {new Date(comment.created_at).toLocaleDateString()}
               </h5>
               <p>{comment.content}</p>
+
+              <form action={handleDeleteComment}>
+                <input type="hidden" name="commentId" value={comment.id} />
+                <input type="hidden" name="postId" value={post.id} />
+                <button type="submit">Delete</button>
+              </form>
             </div>
           ))
         )}
