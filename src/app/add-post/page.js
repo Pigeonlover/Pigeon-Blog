@@ -22,10 +22,10 @@ export default function AddPostPage() {
       [formValues.title, formValues.author, formValues.content]
     );
 
-    //refresh the cache
+    // Refresh the posts so the new one can appear
     revalidatePath("/posts");
 
-    //redirect the user to the rollercoasters page
+    // Redirect the user to the posts' page
     redirect("posts");
   }
 
