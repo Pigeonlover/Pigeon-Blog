@@ -1,4 +1,5 @@
 //
+// Page with a form to add a new blog post
 
 import { db } from "@/utils/dbConnection";
 import { redirect } from "next/navigation";
@@ -28,7 +29,7 @@ export default function AddPostPage() {
       <div className="text-center space-y-2">
         <h1 className="text-3xl font-bold text-gray-800">Add a New Post</h1>
         <p className="text-gray-600">
-          Fill out the form below to publish your thoughts.
+          Fill out the form below to publish a new blog post.
         </p>
       </div>
 
@@ -54,7 +55,7 @@ export default function AddPostPage() {
             htmlFor="author"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Author Name
+            Author&apos;s Name
           </label>
           <input
             type="text"
@@ -77,7 +78,7 @@ export default function AddPostPage() {
             required
             rows="6"
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            placeholder="Write your post here..."
+            placeholder="Start writing your post here..."
           />
         </div>
 

@@ -4,8 +4,10 @@ import { db } from "@/utils/dbConnection";
 import { revalidatePath } from "next/cache";
 
 export default async function PostIdPage({ params }) {
+  // Next was being cranky about needing params to be awaited first. A new feature of Next v15 apparently...
   const awaitedParams = await params;
   const postId = parseInt(awaitedParams.postId, 10);
+  // parseInt() used for safely getting an integer for the id
 
   const postResponse = await db.query(
     `SELECT id, title, author, content, created_at FROM pigeonblogposts WHERE id = $1;`,
@@ -13,25 +15,30 @@ export default async function PostIdPage({ params }) {
   );
   const post = postResponse.rows[0];
 
+  // Fetching comments by post id
   const commentResponse = await db.query(
     `SELECT id, author, content, created_at FROM pigeonblogcomments WHERE post_id = $1;`,
     [postId]
   );
   const comments = commentResponse.rows;
 
+  // If the post cannot be fetched, show this error message
   if (!post)
-    return <p className="text-center text-red-500 mt-8">Post not found!</p>;
+    return <p className="text-center text-red-900 mt-8">Post not found!</p>;
 
+  // Using the server
   async function handleCommentSubmit(formData) {
     "use server";
     const author = formData.get("author");
     const content = formData.get("content");
 
+    // Query to adding new comment to a post
     await db.query(
       `INSERT INTO pigeonblogcomments (author, content, post_id) VALUES ($1, $2, $3)`,
       [author, content, postId]
     );
 
+    // Page refreshed/updated so new comment shows immediately
     revalidatePath(`/posts/${postId}`);
   }
 
@@ -40,6 +47,7 @@ export default async function PostIdPage({ params }) {
     const commentId = parseInt(formData.get("commentId"), 10);
     const postId = parseInt(formData.get("postId"), 10);
 
+    // Query for deleting a comment
     await db.query(`DELETE FROM pigeonblogcomments WHERE id = $1`, [commentId]);
     revalidatePath(`/posts/${postId}`);
   }
@@ -56,7 +64,7 @@ export default async function PostIdPage({ params }) {
         <p className="text-gray-700 leading-relaxed">{post.content}</p>
       </div>
 
-      {/* Comment Form */}
+      {/* Form to add a new comment*/}
       <div className="bg-white p-6 rounded shadow space-y-4">
         <h3 className="text-xl font-semibold text-gray-800">Add a Comment</h3>
         <form action={handleCommentSubmit} className="space-y-4">
@@ -97,11 +105,13 @@ export default async function PostIdPage({ params }) {
         </form>
       </div>
 
-      {/* Comments Section */}
+      {/* Comments' section */}
       <div className="space-y-6">
         <h3 className="text-xl font-semibold text-gray-800">Comments</h3>
         {comments.length === 0 ? (
-          <p className="text-gray-500">No comments yet.</p>
+          <p className="text-gray-500">
+            No comments yet. Be the first to submit one!
+          </p>
         ) : (
           comments.map((comment) => (
             <div
@@ -115,6 +125,8 @@ export default async function PostIdPage({ params }) {
                 Posted on: {new Date(comment.created_at).toLocaleDateString()}
               </h5>
               <p className="text-gray-700">{comment.content}</p>
+
+              {/* Delete button to get rid of a comment */}
               <form action={handleDeleteComment}>
                 <input type="hidden" name="commentId" value={comment.id} />
                 <input type="hidden" name="postId" value={post.id} />

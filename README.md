@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pigeon Blog
 
-## Getting Started
+---
 
-First, run the development server:
+A blog talking all about pigeons. Come and read our posts, and learn something new about these flying gems. History, science, genetics, mythology... There's something here for everyone!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## What Did I Achieve?
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Created a table for the posts and one for the comments. Each comment is connected to a post using a foreign key.
+- Comments have a Delete button so users can delete their comment.
+- There are two forms: one to create a new blog post (and you are redirected to the Posts page after you submit), and another to add a new comment to one of the blog posts.
+- Each post has its own dynamic route, and all the comments present or submitted there are associated with that post.
+- I managed to do more complete styling compared to last week's project in React, and I'm happier this time with how it came out. It's also more responsive.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## What Wasn't I Happy With?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Shockingly, I didn't struggle too much with anything in particular in this project, unlike past ones where I always had 1 or 2 things really frustrating me. To tell the truth, I was unsure about Next.js as we were learning it in lesson, but when I started making this app and saw how seamlessly and quickly I could make a CRUD app, I sort of had an epiphany. It was a lot easier and less messy than trying to make a full-stack in React (I still have trauma from that one last week...).
+I guess I didn't achieve the stretch goals, like for example being able to filter posts by their category. I didn't try because this weekend I was busy, but I'm guessing you do it by adding different category terms to a 'category' column in the table? And then in the code you filter for them using a query selector? I remember we did that a couple of weeks ago in a demo, but I should add that to this project one day for sure.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## References
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+I didn't use as many references this time as in the past, as the demos from lessons were more than enough to help me.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+But I did use docs as always for Tailwind styling --> https://devdocs.io/tailwindcss/
+The docs for Next.js --> https://en.nextjs.im/docs/app/getting-started/fetching-data and https://en.nextjs.im/docs/app/getting-started/updating-data

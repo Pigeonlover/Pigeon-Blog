@@ -2,6 +2,7 @@ import Link from "next/link";
 import { db } from "@/utils/dbConnection";
 
 export default async function PostsPage() {
+  // Fetch all the posts from the database
   const posts = (
     await db.query(
       `SELECT id, title, author, content, created_at FROM pigeonblogposts`
@@ -16,6 +17,7 @@ export default async function PostsPage() {
       </p>
 
       <ul className="space-y-4 max-w-xl mx-auto">
+        {/* Map the posts using a key using a post's id */}
         {posts.map((post) => (
           <li key={post.id}>
             <Link
