@@ -1,11 +1,12 @@
 //
+import "@/app/globals.css";
 
 export default function Footer() {
   return (
     <>
-      <div>
-        <p>Made by Bravefoot</p>
-      </div>
+      <footer>
+        <p>Made by Bravefoot ⓒ 2025</p>
+      </footer>
     </>
   );
 }
